@@ -25,7 +25,8 @@ jobs:
           
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/full_stack_back:${{ github.sha }} .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/full_stack_back:${{ github.sha }} .
+
 
       - name: Push Docker image to registry
         run: docker push ${{ secrets.DOCKER_USERNAME }}/full_stack_back:${{ github.sha }}
