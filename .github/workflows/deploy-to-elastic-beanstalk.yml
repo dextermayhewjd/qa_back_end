@@ -25,10 +25,10 @@ jobs:
           
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/qa_github_action_img:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/qa_github_action_be_img:latest .
 
       - name: Push Docker image to registry
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/qa_github_action_img:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/qa_github_action_be_img:latest
   
   prepare-and-upload-dockerrun-file:
     needs: build-and-push-docker-image
@@ -43,7 +43,7 @@ jobs:
           echo '{
             "AWSEBDockerrunVersion": "1",
             "Image": {
-              "Name": "${{ secrets.DOCKER_USERNAME }}/qa_github_action_img:latest",
+              "Name": "${{ secrets.DOCKER_USERNAME }}/qa_github_action_be_img:latest",
               "Update": "true"
             },
             "Ports": [
@@ -65,7 +65,7 @@ jobs:
       
       - name: Upload zip file to S3
         run: |
-          aws s3 cp myapp.zip s3://elasticbeanstalk-eu-west-2-135439077495/qa_react_front_git_doc/myapp.zip
+          aws s3 cp myapp.zip s3://elasticbeanstalk-eu-west-2-135439077495/qa_dj_back_git_doc/myapp.zip
   
   deploy:
     needs: prepare-and-upload-dockerrun-file
@@ -81,14 +81,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
       
+      - name: Generate version label
+        id: generate-version-label
+        run: echo "VERSION_LABEL=version-${{ github.sha }}" >> $GITHUB_ENV
       
       - name: Deploy to Elastic Beanstalk
         run: |
           aws elasticbeanstalk create-application-version \
-            --application-name qa_front_end_react \
-            --version-label drawsjs \
-            --source-bundle S3Bucket=elasticbeanstalk-eu-west-2-135439077495,S3Key=qa_react_front_git_doc/myapp.zip
+            --application-name qa_back_end \
+            --version-label ${{ env.VERSION_LABEL }} \
+            --source-bundle S3Bucket=elasticbeanstalk-eu-west-2-135439077495,S3Key=qa_dj_back_git_doc/myapp.zip
           aws elasticbeanstalk update-environment \
-            --application-name qa_front_end_react \
-            --environment-name Qafrontendreact-env \
-            --version-label drawsjs
+            --application-name qa_back_end \
+            --environment-name Qabackend-env \
+            --version-label ${{ env.VERSION_LABEL }} \
