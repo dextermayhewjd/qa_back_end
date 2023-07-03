@@ -44,7 +44,7 @@ jobs:
           echo '{
             "AWSEBDockerrunVersion": "1",
             "Image": {
-              "Name": "${{ secrets.DOCKER_USERNAME }}/full_stack_back:${{ github.sha }}",
+              "Name": "${{ secrets.DOCKERHUB_USERNAME }}/full_stack_back:${{ github.sha }}",
               "Update": "true"
             },
             "Ports": [
