@@ -1,0 +1,31 @@
+name: djE2
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - asgiref=3.5.2
+  - bzip2=1.0.8
+  - ca-certificates
+  - cffi=1.15.1
+  - cryptography
+  - django=4.1
+  - django-cors-headers=4.0.0
+  - libffi=3.4.4
+  - openssl=3.0.9
+  - pip=23.1.2
+  - pycparser=2.21
+  - pymysql=1.0.2
+  - python=3.11.3
+  - python-tzdata=2021.1
+  - setuptools=67.8.0
+  - sqlite=3.41.2
+  - sqlparse=0.4.3
+  - tk=8.6.12
+  - tzdata=2023c
+  - wheel=0.38.4
+  - xz=5.4.2
+  - zlib=1.2.13
+  - pip:
+    - djangorestframework==3.14.0
+    - pytz==2023.3
+prefix: C:\Users\d1029\anaconda3\envs\djE2
