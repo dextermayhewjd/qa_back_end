@@ -25,10 +25,10 @@ jobs:
           
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/qa_github_action_be_img:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/full_stack_back:${{ github.sha }} .
 
       - name: Push Docker image to registry
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/qa_github_action_be_img:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/full_stack_back:${{ github.sha }}
   
   prepare-and-upload-dockerrun-file:
     needs: build-and-push-docker-image
@@ -43,7 +43,7 @@ jobs:
           echo '{
             "AWSEBDockerrunVersion": "1",
             "Image": {
-              "Name": "${{ secrets.DOCKERHUB_USERNAME }}/qa_github_action_be_img:latest",
+              "Name": "${{ secrets.DOCKER_USERNAME }}/full_stack_back:${{ github.sha }}",
               "Update": "true"
             },
             "Ports": [
@@ -65,7 +65,7 @@ jobs:
       
       - name: Upload zip file to S3
         run: |
-          aws s3 cp myapp.zip s3://elasticbeanstalk-eu-west-2-135439077495/qa_dj_back_git_doc/myapp.zip
+          aws s3 cp myapp.zip s3://elasticbeanstalk-eu-west-2-135439077495/full_stack_back_end/myapp.zip
   
   deploy:
     needs: prepare-and-upload-dockerrun-file
@@ -88,10 +88,10 @@ jobs:
       - name: Deploy to Elastic Beanstalk
         run: |
           aws elasticbeanstalk create-application-version \
-            --application-name qa_back_end \
-            --version-label ${{ env.VERSION_LABEL }} \
-            --source-bundle S3Bucket=elasticbeanstalk-eu-west-2-135439077495,S3Key=qa_dj_back_git_doc/myapp.zip
+            --application-name FullStackServer \
+            --version-label ${{ github.sha }}
+            --source-bundle S3Bucket=elasticbeanstalk-eu-west-2-135439077495,S3Key=full_stack_back_end/myapp.zip
           aws elasticbeanstalk update-environment \
-            --application-name qa_back_end \
-            --environment-name Qabackend-env \
-            --version-label ${{ env.VERSION_LABEL }} \
+            --application-name FullStackServer \
+            --environment-name FullStackServer-env \
+            --version-label ${{ github.sha }}

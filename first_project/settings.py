@@ -56,8 +56,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = "first_project.urls"
 
 CORS_ALLOWED_ORIGINS = [
-    'http://qafrontendreact-env.eba-x2wjpp2j.eu-west-2.elasticbeanstalk.com'
-    # "http://localhost:3000"
+    'http://listeningtask.eu-west-2.elasticbeanstalk.com/',
+    "http://localhost:3000"
 ]
 TEMPLATES = [
     {
