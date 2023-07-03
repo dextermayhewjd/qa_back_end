@@ -29,7 +29,7 @@ jobs:
 
 
       - name: Push Docker image to registry
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/full_stack_back:${{ github.sha }}
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/full_stack_back:${{ github.sha }}
   
   prepare-and-upload-dockerrun-file:
     needs: build-and-push-docker-image
