@@ -80,18 +80,19 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
-      
+        
       - name: Generate version label
         id: generate-version-label
         run: echo "VERSION_LABEL=version-${{ github.sha }}" >> $GITHUB_ENV
-      
+        
       - name: Deploy to Elastic Beanstalk
         run: |
           aws elasticbeanstalk create-application-version \
             --application-name FullStackServer \
-            --version-label ${{ github.sha }}
+            --version-label ${{ github.sha }} \
             --source-bundle S3Bucket=elasticbeanstalk-eu-west-2-135439077495,S3Key=full_stack_back_end/myapp.zip
           aws elasticbeanstalk update-environment \
             --application-name FullStackServer \
             --environment-name FullStackServer-env \
             --version-label ${{ github.sha }}
+
