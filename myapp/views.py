@@ -67,6 +67,7 @@ def get_more_conversation_with_questions(request):
             random_index_down = random.randint(0, middle_index )
             qualifiedConversations.append(sorted_conversations[random_index_down])
     select_conversations_with_fre(2, 100, 200)
+    select_conversations_with_fre(2, 200, 300) 
     select_conversations_with_fre(2, 200, 424) 
     serializer = ConversationSerializer(qualifiedConversations,many=True)    
     return Response(serializer.data)
