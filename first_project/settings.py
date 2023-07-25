@@ -108,7 +108,7 @@ DATABASES = {
         'NAME': 'qainfo',
         'USER': 'Dexter',
         'PASSWORD': 'RexJam991120?',
-        'HOST': 'qamysqldb.cmi7rkljfrc7.eu-west-2.rds.amazonaws.com',
+        'HOST': 'qamysqldb2.cmi7rkljfrc7.eu-west-2.rds.amazonaws.com',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
