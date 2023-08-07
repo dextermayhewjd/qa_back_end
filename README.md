@@ -28,6 +28,16 @@ This workflow is triggered after successfully building and pushing the Docker im
 
 The `Dockerrun.aws.json` file is zipped and uploaded to an S3 bucket on AWS.
 
+The steps for this workflow are as follows:
+
+1. Prepare the `Dockerrun.aws.json` file using a `run` command, which creates the necessary configuration for AWS Elastic Beanstalk.
+
+2. Zip the `Dockerrun.aws.json` file into `myapp.zip` using the `run` command with `zip`.
+
+3. Configure AWS credentials using `aws-actions/configure-aws-credentials@v1` with the AWS access key ID and secret access key from GitHub secrets.
+
+4. Upload `myapp.zip` to an S3 bucket on AWS using the `aws s3 cp` command.
+
 ### `deploy-to-elastic-beanstalk` Workflow
 
 This workflow is triggered after the `prepare-and-upload-dockerrun-file` workflow completes successfully. It deploys the application to AWS Elastic Beanstalk.
@@ -35,6 +45,15 @@ This workflow is triggered after the `prepare-and-upload-dockerrun-file` workflo
 It creates a new application version with a label generated based on the GitHub commit SHA. The application version is updated in the Elastic Beanstalk environment, triggering a deployment of the new version.
 
 Please ensure that you have configured the necessary GitHub secrets and AWS credentials for the workflows to run successfully.
+
+The steps for this workflow are as follows:
+
+1. Generate a version label using a `run` command and save it to the GitHub environment variable.
+
+2. Create a new application version on Elastic Beanstalk using `aws elasticbeanstalk create-application-version` with the version label and the S3 bucket and key for the source bundle.
+
+3. Update the Elastic Beanstalk environment to use the new application version using `aws elasticbeanstalk update-environment` with the application name, environment name, and version label.
+
 
 ## GitHub Secrets
 
