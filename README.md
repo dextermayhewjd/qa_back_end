@@ -45,9 +45,3 @@ Make sure to set the following GitHub secrets in your repository:
 - `AWS_ACCESS_KEY_ID`: Your AWS access key ID for deploying to Elastic Beanstalk.
 - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key for deploying to Elastic Beanstalk.
 
-Feel free to modify the workflows or Dockerfile to suit your specific deployment requirements. Happy deploying!
-
-If you have any questions or issues, please feel free to open an issue or reach out to the maintainers.
-
-**Note:** This README is generated automatically based on the contents of the Dockerfile and GitHub Actions files in this repository. Make sure to keep them up to date if any changes are made.
-
